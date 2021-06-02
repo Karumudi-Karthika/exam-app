@@ -1,0 +1,13 @@
+language: python
+
+python:
+  - "3.6"
+
+install:
+  - pip install -r requirements.txt -r requirements-dev.txt 
+
+script:
+  - radon cc src -nb --total-average
+  - cat requirements.txt requirements-dev.txt | safety check --stdin
+  - isort --check-only --diff
+  - flake8 src
